@@ -44,6 +44,8 @@ def main():
 
                     square_selected = tuple()
                     player_clicks   = list()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                game_state.revert_move()
 
         draw_game_state(screen, game_state)
         clock.tick(15)

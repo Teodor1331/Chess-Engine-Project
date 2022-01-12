@@ -109,6 +109,16 @@ class GameState:
             self.whites_turn = not self.whites_turn
             self.blacks_turn = not self.blacks_turn
 
+
+    def revert_move(self):
+        if len(self.game_moves) != 0:
+            move = self.__game_moves.pop()
+            assert isinstance(move, Move)
+            self.change_board_place(move.start_row, move.start_col, move.moved_piece)
+            self.change_board_place(move.end_row, move.end_col, move.taken_piece)
+            self.whites_turn = not self.whites_turn
+            self.blacks_turn = not self.blacks_turn
+
     
 class Move:
     RANKS_TO_ROWS       = build_ranks_to_rows_notation()
