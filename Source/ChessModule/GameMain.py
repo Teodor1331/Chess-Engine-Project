@@ -14,7 +14,10 @@ def main():
     clock = pygame.time.Clock()
     screen.fill(pygame.Color("white"))
 
-    game_state = GameState()
+    game_state  =   GameState()
+    valid_moves =   game_state.get_valid_moves()
+    made_move   =   False
+
     load_pieces()
     running = True
 
@@ -40,12 +43,20 @@ def main():
 
                 if len(player_clicks) == 2:
                     move = Move(player_clicks[0], player_clicks[1], game_state.board)
-                    game_state.make_move(move)
+
+                    if move in valid_moves:
+                        game_state.make_move(move)
+                        made_move = True
 
                     square_selected = tuple()
                     player_clicks   = list()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_state.revert_move()
+                made_move = True
+
+        if made_move:
+            valid_moves =   game_state.get_valid_moves()
+            made_move   =   False
 
         draw_game_state(screen, game_state)
         clock.tick(15)

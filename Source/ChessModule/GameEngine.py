@@ -120,6 +120,63 @@ class GameState:
             self.blacks_turn = not self.blacks_turn
 
     
+    def get_valid_moves(self):
+        pass
+
+
+    def get_possible_moves(self):
+        moves = list()
+
+        for i in range(len(self.board)):
+            for j in range(len(self.board[i])):
+                turn = self.board[i][j]
+
+                condition1 = (turn >= 'A' and turn <= 'Z') and self.whites_turn
+                condition2 = (turn >= 'a' and turn <= 'z') and self.blacks_turn
+
+                if condition1 and condition2:
+                    piece = self.board[i][j]
+
+                    if piece == 'p' or piece == 'P':
+                        self.get_pawn_moves(i, j, moves)
+                    elif piece == 'r' or piece == 'R':
+                        self.get_rook_moves(i, j, moves)
+                    elif piece == 'n' or piece == 'N':
+                        self.get_knight_moves(i, j, moves)
+                    elif piece == 'b' or piece == 'B':
+                        self.get_bishop_moves(i, j, moves)
+                    elif piece == 'q' or piece == 'Q':
+                        self.get_queen_moves(i, j, moves)
+                    elif piece == 'k' or piece == 'K':
+                        self.get_king_moves(i, j, moves)
+                        
+
+
+    def get_pawn_moves(self, i, j, moves):
+        pass
+
+
+    def get_rook_moves(self, i, j, moves):
+        pass
+
+
+    def get_knight_moves(self, i, j, moves):
+        pass
+
+
+    def get_bishop_moves(self, i, j, moves):
+        pass
+
+
+    def get_queen_moves(self, i, j, moves):
+        pass
+
+
+    def get_king_moves(self, i, j, moves):
+        pass
+
+
+    
 class Move:
     RANKS_TO_ROWS       = build_ranks_to_rows_notation()
     FILES_TO_COLUMNS    = build_files_to_columns_notation()
