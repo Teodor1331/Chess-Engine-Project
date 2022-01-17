@@ -259,6 +259,13 @@ class GameState:
                 break
 
 
+    def generate_queen_moves(self, row, column):
+
+        #queens literally move like rooks and bishops combined
+        self.generate_rook_moves(row, column)
+        self.generate_bishop_moves(row, column)
+
+
     def revert_move(self):
         if len(self.game_moves) != 0:
             move = self.__game_moves.pop()
