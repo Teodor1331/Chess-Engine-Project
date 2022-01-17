@@ -5,23 +5,28 @@ import pygame
 
 
 IMAGES          =   dict()
+PIECES          =   {
+    'P'     :   'Pawn',
+    'R'     :   'Rook',
+    'N'     :   'Knight',
+    'B'     :   'Bishop',
+    'Q'     :   'Queen',
+    'K'     :   'King',
+}
 
 
 def load_pieces():
-    IMAGES['P']     =   pygame.transform.scale(pygame.image.load('../Images/White Pieces/White_Pawn.png'), (64, 64))
-    IMAGES['R']     =   pygame.transform.scale(pygame.image.load('../Images/White Pieces/White_Rook.png'), (64, 64))
-    IMAGES['N']     =   pygame.transform.scale(pygame.image.load('../Images/White Pieces/White_Knight.png'), (64, 64))
-    IMAGES['B']     =   pygame.transform.scale(pygame.image.load('../Images/White Pieces/White_Bishop.png'), (64, 64))
-    IMAGES['Q']     =   pygame.transform.scale(pygame.image.load('../Images/White Pieces/White_Queen.png'), (64, 64))
-    IMAGES['K']     =   pygame.transform.scale(pygame.image.load('../Images/White Pieces/White_King.png'), (64, 64))
+    elements = [
+        ['../Images/White Pieces/White_', 'PRNBQK'],
+        ['../Images/Black Pieces/Black_', 'prnbqk'],
+    ]
 
-    IMAGES['p']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_Pawn.png'), (64, 64))
-    IMAGES['r']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_Rook.png'), (64, 64))
-    IMAGES['n']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_Knight.png'), (64, 64))
-    IMAGES['b']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_Bishop.png'), (64, 64))
-    IMAGES['q']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_Queen.png'), (64, 64))
-    IMAGES['k']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_King.png'), (64, 64))
-
+    for element in elements:
+        for literal in element[1]:
+            IMAGES[literal] = pygame.transform.scale(
+                pygame.image.load(element[0] + PIECES[literal.upper()] + '.png'),
+                (64, 64))
+                
 
 def draw_board(screen):
     colors = [pygame.Color("white"), pygame.Color("gray")]
