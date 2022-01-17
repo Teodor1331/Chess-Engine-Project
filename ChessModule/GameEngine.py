@@ -226,6 +226,39 @@ class GameState:
                     break
 
 
+    def generate_knight_moves(self, row, column):
+
+        #knights move in Г formation, which can be expressed as doube square moves in any direction and one additional in a direction perpendicular to it
+        #thus, we have 8 possible possitions for a knight
+        possible_possitions = [[2, 1], [2, -1], [-2, 1], [-2, -1],
+                               [1, 2], [1, -2], [-1, 2], [-1, -2]]
+
+        for position in possible_possitions:
+
+            next_row_square = row + position[0]
+            next_column_square = column + position[1]
+
+            if 0 <= next_row_square < 8 and 0 <= next_column_square < 8:
+
+                if self.board[next_row_square][next_column_square] == '.':
+
+                    advance = Move([row, column], [next_row_square, next_column_square], self.board)
+                    self.add_game_move(advance)
+
+                elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqkp":
+
+                    attack = Move([row, column], [next_row_square, next_column_square], self.board)
+                    self.add_game_move(attack)
+
+                elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQKP":
+
+                    attack = Move([row, column], [next_row_square, next_column_square], self.board)
+                    self.add_game_move(attack)
+
+            else:
+                break
+
+
     def revert_move(self):
         if len(self.game_moves) != 0:
             move = self.__game_moves.pop()
