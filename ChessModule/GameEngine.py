@@ -123,6 +123,33 @@ class GameState:
                     double_square_advance = Move([row, column], [row - 2, column], self.board)
                     self.add_game_move(double_square_advance)
 
+            elif column - 1 >= 0 and self.board[row - 1][column - 1] in "rnbqkp":
+                attack_left = Move([row, column], [row - 1, column - 1], self.board)
+                self.add_game_move(attack_left)
+
+            elif column + 1 <= 7 and self.board[row - 1][column + 1] in "rnbqkp":
+                attack_right = Move([row, column], [row - 1, column + 1], self.board)
+                self.add_game_move(attack_right)
+
+        #and black pawns start on row 2 and move downwards. Their column nomeration is also inverted and start from 8
+        else:
+            if self.board[row + 1][column] == ".":
+
+                single_square_advance = Move([row, column], [row + 1, column], self.board)
+                self.add_game_move(single_square_advance)
+
+                if self.board[row + 2][column] == "." and row == 1:
+
+                    double_square_advance = Move([row, column], [row + 2, column], self.board)
+                    self.add_game_move(double_square_advance)
+
+            elif column - 1 >= 0 and self.board[row + 1][column - 1] in "RNBQKP":
+                attack_right = Move([row, column], [row + 1, column - 1], self.board)
+                self.add_game_move(attack_right)
+
+            elif column + 1 <= 7 and self.board[row + 1][column + 1] in "RNBQKP":
+                attack_left = Move([row, column], [row + 1, column + 1], self.board)
+                self.add_game_move(attack_left)
 
 
     def revert_move(self):
