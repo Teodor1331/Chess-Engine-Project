@@ -189,6 +189,43 @@ class GameState:
                     break
 
 
+    def generate_bishop_moves(self, row, column):
+
+        # pretty similar to how a rook would move, just diagonally
+        # the first coefficient resembles row direction, the second one - column
+        moving_directions = [[1, 1], [1, -1], [-1, 1], [-1, -1]]
+
+        for direction in moving_directions:
+
+            for i in range(1, 7):
+
+                next_row_square = row + direction[0] * i
+                next_column_square = column + direction[1] * i
+
+                if 0 <= next_row_square < 8 and 0 <= next_column_square < 8:
+
+                    if self.board[next_row_square][next_column_square] == '.':
+
+                        advance = Move([row, column], [next_row_square, next_column_square], self.board)
+                        self.add_game_move(advance)
+
+                    elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqkp":
+
+                        attack = Move([row, column], [next_row_square, next_column_square], self.board)
+                        self.add_game_move(attack)
+
+                    elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQKP":
+
+                        attack = Move([row, column], [next_row_square, next_column_square], self.board)
+                        self.add_game_move(attack)
+
+                    else:
+                        break
+
+                else:
+                    break
+
+
     def revert_move(self):
         if len(self.game_moves) != 0:
             move = self.__game_moves.pop()
