@@ -54,7 +54,6 @@ class GameState:
     def board(self):
         del self.__board
 
-
     @whites_turn.deleter
     def whites_turn(self):
         del self.__whites_turn
@@ -108,6 +107,22 @@ class GameState:
             self.add_game_move(move)
             self.whites_turn = not self.whites_turn
             self.blacks_turn = not self.blacks_turn
+
+
+    def generate_pawn_moves(self, row, column):
+
+        #white pawns start on row 6 and they move upwards
+        if self.whites_turn:
+            if self.board[row - 1][column] == ".":
+
+                single_square_advance = Move([row, column], [row - 1, column], self.board)
+                self.add_game_move(single_square_advance)
+
+                if self.board[row - 2][column] == "." and row == 6:
+
+                    double_square_advance = Move([row, column], [row - 2, column], self.board)
+                    self.add_game_move(double_square_advance)
+
 
 
     def revert_move(self):
