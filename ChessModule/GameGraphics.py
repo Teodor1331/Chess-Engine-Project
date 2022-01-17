@@ -20,7 +20,7 @@ def load_pieces():
     IMAGES['n']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_Knight.png'), (64, 64))
     IMAGES['b']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_Bishop.png'), (64, 64))
     IMAGES['q']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_Queen.png'), (64, 64))
-    IMAGES['k']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_Knight.png'), (64, 64))
+    IMAGES['k']     =   pygame.transform.scale(pygame.image.load('../Images/Black Pieces/Black_King.png'), (64, 64))
 
 
 def draw_board(screen):
