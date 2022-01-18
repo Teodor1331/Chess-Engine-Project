@@ -4,15 +4,21 @@ from GameHelpers import build_files_to_columns_notation
 
 class GameState:
     def __init__(self):
-        self.__board        =   self.generate_board()
-        self.__whites_turn  =   True
-        self.__blacks_turn  =   False
-        self.__game_moves   =   list()
+        self.__board            =   self.generate_board()
+        self.__move_functions   =   self.generate_functions()
+        self.__whites_turn      =   True
+        self.__blacks_turn      =   False
+        self.__game_moves       =   list()
 
 
     @property
     def board(self):
         return self.__board
+
+
+    @property
+    def move_functions(self):
+        return self.__move_functions
 
 
     @property
@@ -35,6 +41,11 @@ class GameState:
         self.__board = board
 
 
+    @move_functions.setter
+    def move_functions(self, move_functions):
+        self.__move_functions = move_functions
+
+
     @whites_turn.setter
     def whites_turn(self, whites_turn):
         self.__whites_turn = whites_turn
@@ -55,6 +66,11 @@ class GameState:
         del self.__board
 
 
+    @move_functions.deleter
+    def move_functions(self):
+        del self.__move_functions
+
+
     @whites_turn.deleter
     def whites_turn(self):
         del self.__whites_turn
@@ -72,6 +88,7 @@ class GameState:
 
     def __del__(self):
         del self.__board
+        del self.__move_functions
         del self.__whites_turn
         del self.__blacks_turn
         del self.__game_moves
@@ -88,6 +105,17 @@ class GameState:
             ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
             ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
         ]
+
+
+    def generate_functions(self):
+        return {
+            'P'     :   self.get_pawn_moves,
+            'R'     :   self.get_rook_moves,
+            'N'     :   self.get_knight_moves,
+            'B'     :   self.get_bishop_moves,
+            'Q'     :   self.get_queen_moves,
+            'K'     :   self.get_king_moves,
+        }
 
     
     def change_board_place(self, row, col, value):
@@ -134,8 +162,6 @@ class GameState:
     def get_possible_moves(self):
         moves = list()
 
-        moves.append(Move((6, 4), (4, 4), self.board))
-
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 turn = self.board[i][j]
@@ -143,46 +169,51 @@ class GameState:
                 condition1 = (turn >= 'A' and turn <= 'Z') and self.whites_turn
                 condition2 = (turn >= 'a' and turn <= 'z') and self.blacks_turn
 
-                if condition1 and condition2:
+                if condition1 or condition2:
                     piece = self.board[i][j]
+                    self.move_functions[piece.upper()](i, j, moves)
 
-                    if piece == 'p' or piece == 'P':
-                        self.get_pawn_moves(i, j, moves)
-                    elif piece == 'r' or piece == 'R':
-                        self.get_rook_moves(i, j, moves)
-                    elif piece == 'n' or piece == 'N':
-                        self.get_knight_moves(i, j, moves)
-                    elif piece == 'b' or piece == 'B':
-                        self.get_bishop_moves(i, j, moves)
-                    elif piece == 'q' or piece == 'Q':
-                        self.get_queen_moves(i, j, moves)
-                    elif piece == 'k' or piece == 'K':
-                        self.get_king_moves(i, j, moves)
         return moves       
 
 
     def get_pawn_moves(self, i, j, moves):
-        pass
+        assert isinstance(moves, list)
+
+        if self.whites_turn:
+            if self.board[i - 1][j] == '.':
+                moves.append(Move((i, j), (i - 1, j), self.board))
+
+                if i == 6 and self.board[i - 2][j] == '.' and self.board[i - 1][j]:
+                    moves.append(Move((i, j), (i - 2, j), self.board))
+
+                if j - 1 >= 0:
+                    if 'a' <= self.board[i - 1][j - 1] <= 'z':
+                        moves.append(Move((i, j), (i - 1, j - 1), self.board))
+                if j + 1 < 7:
+                    if 'a' <= self.board[i - 1][j + 1] <= 'z':
+                        moves.append(Move((i, j), (i - 1, j + 1), self.board))
+        else:
+            pass
 
 
     def get_rook_moves(self, i, j, moves):
-        pass
+        assert isinstance(moves, list)
 
 
     def get_knight_moves(self, i, j, moves):
-        pass
+        assert isinstance(moves, list)
 
 
     def get_bishop_moves(self, i, j, moves):
-        pass
+        assert isinstance(moves, list)
 
 
     def get_queen_moves(self, i, j, moves):
-        pass
+        assert isinstance(moves, list)
 
 
     def get_king_moves(self, i, j, moves):
-        pass
+        assert isinstance(moves, list)
 
 
     
@@ -203,7 +234,6 @@ class Move:
         self.__taken_piece  =   board[end[0]][end[1]]
 
         self.__move_id      =   self.generate_move_id()
-        print(self.__move_id)
 
 
     @property
