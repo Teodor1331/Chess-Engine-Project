@@ -54,7 +54,6 @@ class GameState:
     def board(self):
         del self.__board
 
-
     @whites_turn.deleter
     def whites_turn(self):
         del self.__whites_turn
@@ -108,6 +107,163 @@ class GameState:
             self.add_game_move(move)
             self.whites_turn = not self.whites_turn
             self.blacks_turn = not self.blacks_turn
+
+
+    def generate_pawn_moves(self, row, column):
+
+        #white pawns start on row 6 and they move upwards
+        if self.whites_turn:
+            if self.board[row - 1][column] == ".":
+
+                single_square_advance = Move([row, column], [row - 1, column], self.board)
+                self.add_game_move(single_square_advance)
+
+                if self.board[row - 2][column] == "." and row == 6:
+
+                    double_square_advance = Move([row, column], [row - 2, column], self.board)
+                    self.add_game_move(double_square_advance)
+
+            elif column - 1 >= 0 and self.board[row - 1][column - 1] in "rnbqp":
+                attack_left = Move([row, column], [row - 1, column - 1], self.board)
+                self.add_game_move(attack_left)
+
+            elif column + 1 <= 7 and self.board[row - 1][column + 1] in "rnbqp":
+                attack_right = Move([row, column], [row - 1, column + 1], self.board)
+                self.add_game_move(attack_right)
+
+        #and black pawns start on row 2 and move downwards. Their column nomeration is also inverted and start from 8
+        else:
+            if self.board[row + 1][column] == ".":
+
+                single_square_advance = Move([row, column], [row + 1, column], self.board)
+                self.add_game_move(single_square_advance)
+
+                if self.board[row + 2][column] == "." and row == 1:
+
+                    double_square_advance = Move([row, column], [row + 2, column], self.board)
+                    self.add_game_move(double_square_advance)
+
+            elif column - 1 >= 0 and self.board[row + 1][column - 1] in "RNBQP":
+                attack_right = Move([row, column], [row + 1, column - 1], self.board)
+                self.add_game_move(attack_right)
+
+            elif column + 1 <= 7 and self.board[row + 1][column + 1] in "RNBQP":
+                attack_left = Move([row, column], [row + 1, column + 1], self.board)
+                self.add_game_move(attack_left)
+
+
+    def generate_rook_moves(self, row, column):
+
+        #expressing up, down, left and right directions with pairs of coefficients
+        #the first coefficient resembles row direction, the second one - column
+        moving_directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+
+        for direction in moving_directions:
+
+            for i in range(1, 7):
+
+                next_row_square = row + direction[0] * i
+                next_column_square = column + direction[1] * i
+
+                if 0 <= next_row_square < 8 and 0 <= next_column_square < 8:
+
+                    if self.board[next_row_square][next_column_square] == '.':
+
+                        advance = Move([row, column], [next_row_square, next_column_square], self.board)
+                        self.add_game_move(advance)
+
+                    elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqp":
+
+                        attack = Move([row, column], [next_row_square, next_column_square], self.board)
+                        self.add_game_move(attack)
+
+                    elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQP":
+
+                        attack = Move([row, column], [next_row_square, next_column_square], self.board)
+                        self.add_game_move(attack)
+
+                    else:
+                        break
+
+                else:
+                    break
+
+
+    def generate_bishop_moves(self, row, column):
+
+        # pretty similar to how a rook would move, just diagonally
+        # the first coefficient resembles row direction, the second one - column
+        moving_directions = [[1, 1], [1, -1], [-1, 1], [-1, -1]]
+
+        for direction in moving_directions:
+
+            for i in range(1, 7):
+
+                next_row_square = row + direction[0] * i
+                next_column_square = column + direction[1] * i
+
+                if 0 <= next_row_square < 8 and 0 <= next_column_square < 8:
+
+                    if self.board[next_row_square][next_column_square] == '.':
+
+                        advance = Move([row, column], [next_row_square, next_column_square], self.board)
+                        self.add_game_move(advance)
+
+                    elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqp":
+
+                        attack = Move([row, column], [next_row_square, next_column_square], self.board)
+                        self.add_game_move(attack)
+
+                    elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQP":
+
+                        attack = Move([row, column], [next_row_square, next_column_square], self.board)
+                        self.add_game_move(attack)
+
+                    else:
+                        break
+
+                else:
+                    break
+
+
+    def generate_knight_moves(self, row, column):
+
+        #knights move in Г formation, which can be expressed as doube square moves in any direction and one additional in a direction perpendicular to it
+        #thus, we have 8 possible possitions for a knight
+        possible_possitions = [[2, 1], [2, -1], [-2, 1], [-2, -1],
+                               [1, 2], [1, -2], [-1, 2], [-1, -2]]
+
+        for position in possible_possitions:
+
+            next_row_square = row + position[0]
+            next_column_square = column + position[1]
+
+            if 0 <= next_row_square < 8 and 0 <= next_column_square < 8:
+
+                if self.board[next_row_square][next_column_square] == '.':
+
+                    advance = Move([row, column], [next_row_square, next_column_square], self.board)
+                    self.add_game_move(advance)
+
+                elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqp":
+
+                    attack = Move([row, column], [next_row_square, next_column_square], self.board)
+                    self.add_game_move(attack)
+
+                elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQP":
+
+                    attack = Move([row, column], [next_row_square, next_column_square], self.board)
+                    self.add_game_move(attack)
+
+            else:
+                break
+
+
+    def generate_queen_moves(self, row, column):
+
+        #queens literally move like rooks and bishops combined
+        self.generate_rook_moves(row, column)
+        self.generate_bishop_moves(row, column)
 
 
     def revert_move(self):
