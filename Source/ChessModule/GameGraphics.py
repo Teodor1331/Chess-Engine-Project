@@ -17,8 +17,8 @@ PIECES          =   {
 
 def load_pieces():
     elements = [
-        ['../Images/White Pieces/White_', 'PRNBQK'],
-        ['../Images/Black Pieces/Black_', 'prnbqk'],
+        ['../../Images/White Pieces/White_', 'PRNBQK'],
+        ['../../Images/Black Pieces/Black_', 'prnbqk'],
     ]
 
     for element in elements:
