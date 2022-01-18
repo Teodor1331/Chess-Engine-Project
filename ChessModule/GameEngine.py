@@ -123,11 +123,11 @@ class GameState:
                     double_square_advance = Move([row, column], [row - 2, column], self.board)
                     self.add_game_move(double_square_advance)
 
-            elif column - 1 >= 0 and self.board[row - 1][column - 1] in "rnbqkp":
+            elif column - 1 >= 0 and self.board[row - 1][column - 1] in "rnbqp":
                 attack_left = Move([row, column], [row - 1, column - 1], self.board)
                 self.add_game_move(attack_left)
 
-            elif column + 1 <= 7 and self.board[row - 1][column + 1] in "rnbqkp":
+            elif column + 1 <= 7 and self.board[row - 1][column + 1] in "rnbqp":
                 attack_right = Move([row, column], [row - 1, column + 1], self.board)
                 self.add_game_move(attack_right)
 
@@ -143,11 +143,11 @@ class GameState:
                     double_square_advance = Move([row, column], [row + 2, column], self.board)
                     self.add_game_move(double_square_advance)
 
-            elif column - 1 >= 0 and self.board[row + 1][column - 1] in "RNBQKP":
+            elif column - 1 >= 0 and self.board[row + 1][column - 1] in "RNBQP":
                 attack_right = Move([row, column], [row + 1, column - 1], self.board)
                 self.add_game_move(attack_right)
 
-            elif column + 1 <= 7 and self.board[row + 1][column + 1] in "RNBQKP":
+            elif column + 1 <= 7 and self.board[row + 1][column + 1] in "RNBQP":
                 attack_left = Move([row, column], [row + 1, column + 1], self.board)
                 self.add_game_move(attack_left)
 
@@ -172,12 +172,12 @@ class GameState:
                         advance = Move([row, column], [next_row_square, next_column_square], self.board)
                         self.add_game_move(advance)
 
-                    elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqkp":
+                    elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqp":
 
                         attack = Move([row, column], [next_row_square, next_column_square], self.board)
                         self.add_game_move(attack)
 
-                    elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQKP":
+                    elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQP":
 
                         attack = Move([row, column], [next_row_square, next_column_square], self.board)
                         self.add_game_move(attack)
@@ -209,12 +209,12 @@ class GameState:
                         advance = Move([row, column], [next_row_square, next_column_square], self.board)
                         self.add_game_move(advance)
 
-                    elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqkp":
+                    elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqp":
 
                         attack = Move([row, column], [next_row_square, next_column_square], self.board)
                         self.add_game_move(attack)
 
-                    elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQKP":
+                    elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQP":
 
                         attack = Move([row, column], [next_row_square, next_column_square], self.board)
                         self.add_game_move(attack)
@@ -245,12 +245,12 @@ class GameState:
                     advance = Move([row, column], [next_row_square, next_column_square], self.board)
                     self.add_game_move(advance)
 
-                elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqkp":
+                elif self.whites_turn and self.board[next_row_square][next_column_square] in "rnbqp":
 
                     attack = Move([row, column], [next_row_square, next_column_square], self.board)
                     self.add_game_move(attack)
 
-                elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQKP":
+                elif self.whites_turn is False and self.board[next_row_square][next_column_square] in "RNBQP":
 
                     attack = Move([row, column], [next_row_square, next_column_square], self.board)
                     self.add_game_move(attack)
