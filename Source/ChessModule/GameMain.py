@@ -43,16 +43,17 @@ def main():
 
                 if len(player_clicks) == 2:
                     move = Move(player_clicks[0], player_clicks[1], game_state.board)
-
+                    print(move.__repr__())
                     if move in valid_moves:
                         game_state.make_move(move)
                         made_move = True
 
                     square_selected = tuple()
                     player_clicks   = list()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                game_state.revert_move()
-                made_move = True
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    game_state.revert_move()
+                    made_move = True
 
         if made_move:
             valid_moves =   game_state.get_valid_moves()

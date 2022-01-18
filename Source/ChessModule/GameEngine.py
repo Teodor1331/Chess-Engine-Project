@@ -119,13 +119,22 @@ class GameState:
             self.whites_turn = not self.whites_turn
             self.blacks_turn = not self.blacks_turn
 
-    
+    '''
+        Decide all valid moves which consider checks.
+        That are the moves that need the possible moves.
+    '''
     def get_valid_moves(self):
-        pass
+        return self.get_possible_moves()
 
 
+    '''
+        Decide all moves which do not consider checks.
+        That are the moves that are regular in the game.
+    '''
     def get_possible_moves(self):
         moves = list()
+
+        moves.append(Move((6, 4), (4, 4), self.board))
 
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
@@ -149,7 +158,7 @@ class GameState:
                         self.get_queen_moves(i, j, moves)
                     elif piece == 'k' or piece == 'K':
                         self.get_king_moves(i, j, moves)
-                        
+        return moves       
 
 
     def get_pawn_moves(self, i, j, moves):
@@ -193,6 +202,9 @@ class Move:
         self.__moved_piece  =   board[start[0]][start[1]]
         self.__taken_piece  =   board[end[0]][end[1]]
 
+        self.__move_id      =   self.generate_move_id()
+        print(self.__move_id)
+
 
     @property
     def start_row(self):
@@ -224,6 +236,16 @@ class Move:
         return self.__taken_piece
 
 
+    @property
+    def move_id(self):
+        return self.__move_id
+
+
+    def __eq__(self, move):
+        assert isinstance(move, Move)
+        return self.move_id == move.move_id
+
+
     def __del__(self):
         del self.__start_row
         del self.__start_col
@@ -234,6 +256,8 @@ class Move:
         del self.__moved_piece
         del self.__taken_piece
 
+        del self.__move_id
+
 
     def __repr__(self):
         return  self.get_rank_file(self.start_row, self.start_col) + \
@@ -242,3 +266,10 @@ class Move:
 
     def get_rank_file(self, row, column):
         return self.COLUMNS_TO_FILES[column] + self.ROWS_TO_RANKS[row]
+
+
+    def generate_move_id(self):
+        return  self.start_row  * 1000   + \
+                self.start_col  * 100    + \
+                self.end_row    * 10     + \
+                self.end_col    * 1
