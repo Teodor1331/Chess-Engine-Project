@@ -2,14 +2,9 @@
 
 """Tests on the module with the methods for building the chess board."""
 
-from unittest import mock
-
-import pygame
-
 from game_graphics import IMAGES
 from game_graphics import PIECES
 from game_graphics import ELEMENTS
-from game_graphics import load_pieces
 
 
 def test_images_constant():
@@ -43,20 +38,3 @@ def test_elements_constant():
     assert ELEMENTS[1][0] == '../images/Black Pieces/Black_'
     assert ELEMENTS[0][1] == 'PRNBQK'
     assert ELEMENTS[1][1] == 'prnbqk'
-
-
-def test_loading_and_drawing_methods():
-    """Test the loading and drawing methods."""
-    with mock.patch('game_graphics.ELEMENTS') as mocked_elements:
-        mocked_elements = [
-            [('../' + ELEMENTS[0][0]), ELEMENTS[0][1]],
-            [('../' + ELEMENTS[1][0]), ELEMENTS[1][1]],
-        ]
-
-        assert 'mocked_elements' in locals()
-        assert locals()['mocked_elements'] is mocked_elements
-
-        screen = pygame.display.set_mode((512, 512), flags=pygame.HIDDEN)
-        screen.fill(pygame.Color('white'))
-
-        assert isinstance(load_pieces(), type(None))
