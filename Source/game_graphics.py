@@ -15,8 +15,8 @@ PIECES = {
     'K': 'King',
 }
 ELEMENTS = [
-    ['../images/White Pieces/White_', 'PRNBQK'],
-    ['../images/Black Pieces/Black_', 'prnbqk'],
+    ['../Images/White Pieces/White_', 'PRNBQK'],
+    ['../Images/Black Pieces/Black_', 'prnbqk'],
 ]
 
 

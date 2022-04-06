@@ -34,7 +34,7 @@ def test_elements_constant():
     assert isinstance(ELEMENTS[0], list)
     assert isinstance(ELEMENTS[1], list)
 
-    assert ELEMENTS[0][0] == '../images/White Pieces/White_'
-    assert ELEMENTS[1][0] == '../images/Black Pieces/Black_'
+    assert ELEMENTS[0][0] == '../Images/White Pieces/White_'
+    assert ELEMENTS[1][0] == '../Images/Black Pieces/Black_'
     assert ELEMENTS[0][1] == 'PRNBQK'
     assert ELEMENTS[1][1] == 'prnbqk'
