@@ -64,5 +64,5 @@ pytest:
 	pytest
 
 clean:
-	@rm -r __pycache__
-	@rm -r .pytest_cache
+	@rm -r -f __pycache__
+	@rm -r -f .pytest_cache
