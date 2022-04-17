@@ -62,18 +62,15 @@ def test_game_state_properties(game_state, game_board):
     assert isinstance(game_state, GameState)
 
     assert hasattr(game_state, 'board')
-    assert hasattr(game_state, 'whites_turn')
-    assert hasattr(game_state, 'blacks_turn')
+    assert hasattr(game_state, 'player_turn')
     assert hasattr(game_state, 'game_moves')
 
     # assert isinstance(game_state.board, List[List[str]])
-    assert isinstance(game_state.whites_turn, bool)
-    assert isinstance(game_state.blacks_turn, bool)
+    assert isinstance(game_state.player_turn, bool)
     assert isinstance(game_state.game_moves, list)
 
     assert game_state.board == game_board
-    assert game_state.whites_turn is True
-    assert game_state.blacks_turn is False
+    assert game_state.player_turn is True
     assert game_state.game_moves == []
 
 
@@ -82,13 +79,11 @@ def test_game_state_deleters(game_state):
     assert isinstance(game_state, GameState)
 
     del game_state.board
-    del game_state.whites_turn
-    del game_state.blacks_turn
+    del game_state.player_turn
     del game_state.game_moves
 
     assert not hasattr(game_state, 'board')
-    assert not hasattr(game_state, 'whites_turn')
-    assert not hasattr(game_state, 'blacks_turn')
+    assert not hasattr(game_state, 'player_turn')
     assert not hasattr(game_state, 'game_moves')
 
 

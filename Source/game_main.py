@@ -45,11 +45,22 @@ def main():
                     player_clicks.append(square_selected)
 
                 if len(player_clicks) == 2:
-                    move = Move(
-                        player_clicks[0], player_clicks[1],
-                        game_state.board
-                    )
-                    game_state.make_move(move)
+                    coordinate1 = player_clicks[0][0]
+                    coordinate2 = player_clicks[0][1]
+                    figure = game_state.board[coordinate1][coordinate2]
+
+                    if game_state.player_turn and 'A' <= figure <= 'Z':
+                        move = Move(
+                            player_clicks[0], player_clicks[1],
+                            game_state.board
+                        )
+                        game_state.make_move(move)
+                    elif not game_state.player_turn and 'a' <= figure <= 'z':
+                        move = Move(
+                            player_clicks[0], player_clicks[1],
+                            game_state.board
+                        )
+                        game_state.make_move(move)
 
                     square_selected = ()
                     player_clicks = []
