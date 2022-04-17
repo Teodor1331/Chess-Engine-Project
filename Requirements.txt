@@ -1,7 +1,8 @@
 pygame
+
 pytest
+
 pylint
-pylama
 pycodestyle
 pydocstyle
 pyflakes
